@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="shortcut icon" href="assest/dashboard.png" type="image/x-icon">
+  <title>Material Delivery Forecast</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-6">
+  <div class="  max-w-7xl mx-auto p-4 md:p-8 bg-white rounded-lg shadow border border-gray-300">
+    <!-- Header -->
+    <div class="flex items-center justify-between bg-blue-400 text-white px-4 py-3 rounded-t-md">
+      <h2 class="text-lg font-semibold">Material Delivery Forecast</h2>
+      <div class="space-x-2">
+        <button class="bg-white text-gray-800 text-sm px-3 py-1 rounded shadow">Last 3 Months</button>
+        <button class="bg-white text-gray-800 text-sm px-3 py-1 rounded shadow">Next 3 Months</button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+      <table class=" min-w-[900px] w-full table-fixed text-sm text-center border-t border-gray-300">
+        <!-- Header Rows -->
+        <thead>
+          <tr class="bg-gray-100 text-gray-800">
+            <th class="border px-2 py-2 w-24">Material</th>
+            <th colspan="3" class="border px-2 py-2">Last 3 Months (Actual Delivery)</th>
+            <th colspan="3" class="border px-2 py-2">Next 3 Months (Projection)</th>
+            <th class="border px-2 py-2 w-20">Difference</th>
+            <th class="border px-2 py-2 w-24">Actions</th>
+          </tr>
+          <tr class="bg-gray-50">
+            <th></th>
+            <th class="border px-2 py-1">April</th>
+            <th class="border px-2 py-1">May</th>
+            <th class="border px-2 py-1">June</th>
+            <th class="border px-2 py-1">July</th>
+            <th class="border px-2 py-1">August</th>
+            <th class="border px-2 py-1">September</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <!-- Nut Row -->
+        <tbody>
+          <tr>
+            <td class="border px-2 py-1 font-semibold">Nut</td>
+            <td class="border px-2 py-1">3,000</td>
+            <td class="border px-2 py-1">25,000</td>
+            <td class="border px-2 py-1">24,000</td>
+            <td class="border px-2 py-1">25,000 <span class="bg-yellow-300 text-xs px-1 rounded ml-1">PEAK</span></td>
+            <td class="border px-2 py-1">25,000 <span class="bg-yellow-300 text-xs px-1 rounded ml-1">PEAK</span></td>
+            <td class="border px-2 py-1">25,000 <span class="bg-yellow-300 text-xs px-1 rounded ml-1">PEAK</span></td>
+            <td class="border px-2 py-1 text-green-600 font-semibold">+5,000</td>
+            <td class="border px-2 py-1 space-x-2">
+              <button title="Edit" class="text-blue-600 hover:text-blue-800"><i class="fa-solid fa-pen-to-square"
+                  style="color: #5997f6;" onclick="enableEditing(this)" data-id="FORECAST_ID_HERE"></i></button>
+              <button title="Delete" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"
+                  style="color: #da3746;" onclick="clearPeak(this)"></i></button>
+            </td>
+          </tr>
+
+          <!-- Actual Supply Row -->
+          <tr class="bg-gray-50">
+            <td class="border px-2 py-1 font-medium">Actual Supply</td>
+            <td colspan="3" class="border px-2 py-1 bg-gray-100 text-gray-500">-</td>
+            <td class="border px-2 py-1">20,000</td>
+            <td class="border px-2 py-1">20,000</td>
+            <td class="border px-2 py-1">15,000</td>
+            <td class="border px-2 py-1 text-red-600 font-semibold">-10,000</td>
+            <td class="border px-2 py-1">
+              <button onclick="confirmPeak(this)"
+                class="bg-green-600 text-white text-sm px-3 py-1 rounded hover:bg-green-700"><i
+                  class="fa-solid fa-check" style="color: #fafcff;" disabled></i>Confirm</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <div class="max-w-6xl mx-auto bg-white shadow-md rounded-md p-6">
+        <!-- Title -->
+        <div class="flex items-center mb-4">
+          <i class="fa-solid fa-pen mr-2"></i>
+          <h2 class="font-semibold text-lg text-black">Enter Actual Supply (Vendor Only)</h2>
+        </div>
+
+        <!-- Input Row -->
+        <div class="flex flex-wrap items-center gap-4">
+          <!-- July -->
+          <div class="flex flex-col">
+            <label class="text-sm font-medium text-gray-700 mb-1">July</label>
+            <input type="number" value="20000"
+              class="border rounded-md px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <!-- August -->
+          <div class="flex flex-col">
+            <label class="text-sm font-medium text-gray-700 mb-1">August</label>
+            <input type="number" value="20000"
+              class="border rounded-md px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <!-- September -->
+          <div class="flex flex-col">
+            <label class="text-sm font-medium text-gray-700 mb-1">September</label>
+            <input type="number" value="15000"
+              class="border rounded-md px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <!-- Save Button -->
+          <button onclick="saveConfirmedPeaks()"
+            class="mt-5 md:mt-6 bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded-md flex items-center px-4 py-3 w-24">
+            <i class="fa-solid fa-floppy-disk mr-2"></i>
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    function enableEditing(btn) {
+      const row = btn.closest('tr');
+      const forecastId = btn.getAttribute('data-id');
+
+      // Move to next row (actual supply wala) to find Confirm button
+      const confirmBtn = row.nextElementSibling.querySelector('button');
+
+      // Enable confirm button
+      confirmBtn.disabled = false;
+      confirmBtn.setAttribute('data-id', forecastId); // pass forecast ID
+
+      // Edit July/August/Sept PEAK cells
+      const cells = row.querySelectorAll('td');
+      [4, 5, 6].forEach(index => {
+        const valueText = cells[index].innerText.replace(/[^0-9]/g, '');
+        cells[index].innerHTML = `
+        <input type="number" class="border border-gray-300 px-2 py-1 rounded w-20 text-center" value="${valueText}">
+        <span class="bg-yellow-300 text-xs px-1 rounded ml-1">PEAK</span>
+      `;
+      });
+    }
+
+
+
+
+    function confirmPeak(btn) {
+      const row = btn.closest('tr').previousElementSibling; // PEAK row
+      const inputs = row.querySelectorAll('input');
+
+      const values = [];
+
+      inputs.forEach(input => {
+        const value = input.value;
+        values.push(parseInt(value));
+
+        const cell = input.parentElement;
+        cell.innerHTML = `${value} <span class="bg-yellow-300 text-xs px-1 rounded ml-1">PEAK</span>`;
+      });
+
+      // Disable action buttons
+      const actionTd = row.querySelector('td:last-child');
+      const buttons = actionTd.querySelectorAll('button');
+      buttons.forEach(btn => btn.disabled = true);
+
+      // Lock Confirm
+      btn.disabled = true;
+
+      // Store values
+      row.setAttribute('data-confirmed', 'true');
+      row.setAttribute('data-values', JSON.stringify(values));
+    }
+
+
+    function clearPeak(btn) {
+      const row = btn.closest('tr');
+      const confirmBtn = row.nextElementSibling.querySelector('button');
+
+      // Enable confirm button
+      confirmBtn.disabled = false;
+
+      // Replace July, August, September cells with 0 + PEAK badge
+      const cells = row.querySelectorAll('td');
+      [4, 5, 6].forEach(index => {
+        cells[index].innerHTML = `
+        <input type="number" class="border border-gray-300 px-2 py-1 rounded w-20 text-center" value="0">
+        <span class="bg-yellow-300 text-xs px-1 rounded ml-1">PEAK</span>
+      `;
+      });
+
+    }
+
+
+
+    function saveConfirmedPeaks() {
+      const confirmedRow = document.querySelector('tr[data-confirmed="true"]');
+
+      if (!confirmedRow) {
+        alert("❌ No row confirmed.");
+        return;
+      }
+
+      const values = JSON.parse(confirmedRow.getAttribute('data-values'));
+
+      // Target input fields from Actual Supply section (bottom form)
+      const inputFields = document.querySelectorAll('.max-w-6xl input');
+
+      if (inputFields.length < 3) {
+        alert("Supply input fields not found.");
+        return;
+      }
+
+
+
+      // Update input fields with confirmed PEAK values
+      inputFields.forEach((input, index) => {
+        input.value = values[index]
+        input.disabled = true; //  disable scrolling/typing
+        input.classList.add("bg-gray-200", "cursor-not-allowed");
+      });
+
+      // Remove data-confirmed to allow new edits
+    confirmedRow.removeAttribute("data-confirmed");
+    confirmedRow.removeAttribute("data-values");
+
+      alert(" Actual Supply fields updated successfully!");
+    }
+
+
+  </script>
+
+
+</body>
+
+</html>
